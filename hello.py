@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, render_template
 app = Flask(__name__)
 
 @app.route("/")
@@ -65,8 +65,14 @@ def account():
     return page
 
 @app.route("/hi/<name>")
-def hi(name):
-  return "Hi %s" % name
+def hi(name=None):
+  user = {'name': name}
+  return render_template('hello.html', user=user)
+
+@app.route("/hey/")
+@app.route("/hey/<name>")
+def hey(name=None):
+  return render_template("conditional.html", name=name)
 
 @app.route("/add/<int:first>/<int:second>")
 def add(first, second):
@@ -94,6 +100,29 @@ def upload():
     </html>
     '''
     return page, 200
+
+@app.route("/users/")
+def users():
+  names = ['simon', 'thomas', 'lee', 'jamie', 'sylvester']
+  return render_template('loops.html', names=names)
+
+@app.route("/inherits/")
+def inherits():
+  return render_template('base.html')
+
+@app.route("/inherits/one/")
+def inherits_one():
+  return render_template('inherits1.html')
+
+@app.route("/inherits/two/")
+def inherits_two():
+  return render_template('inherits2.html')
+
+
+
+
+
+
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
