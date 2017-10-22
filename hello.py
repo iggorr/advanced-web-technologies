@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template, abort
 app = Flask(__name__)
 
 @app.route("/")
@@ -117,12 +117,6 @@ def inherits_one():
 @app.route("/inherits/two/")
 def inherits_two():
   return render_template('inherits2.html')
-
-
-
-
-
-
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
